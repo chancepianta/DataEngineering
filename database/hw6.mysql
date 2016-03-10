@@ -1,0 +1,12 @@
+-- Script to create database and table for HW6 of Data Engineering
+
+CREATE DATABASE IF NOT EXISTS data_engineering;
+
+USE data_engineering
+
+CREATE TABLE benchmark (
+	theKey INT PRIMARY KEY,
+	columnA INT,
+	columnB INT,
+	filler CHAR(247)
+);
