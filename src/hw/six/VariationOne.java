@@ -28,7 +28,7 @@ public class VariationOne {
 			doInsert(conn, total);
 			System.out.println("End: " + System.currentTimeMillis());
 
-			doDrop(conn);
+			doDelete(conn);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		} finally {
@@ -37,7 +37,13 @@ public class VariationOne {
 			}
 		}
 	}
-	
+	/**
+	 * Performs batch insertion in sorted order into the benchmark table. 
+	 * Random values are generated for columnA, columnB, and filler.
+	 * @param conn
+	 * @param total
+	 * @throws SQLException
+	 */
 	private static void doInsert(Connection conn, int total) throws SQLException {
 		Random random = new Random();
 		PreparedStatement statement = conn.prepareStatement("INSERT INTO benchmark (theKey, columnA, columnB, filler) VALUES (?, ?, ?, ?)");
@@ -55,8 +61,12 @@ public class VariationOne {
 		statement.executeBatch();
 		statement.closeOnCompletion();
 	}
-	
-	private static void doDrop(Connection conn) throws SQLException {
+	/**
+	 * Deletes all rows from benchmark table.
+	 * @param conn
+	 * @throws SQLException
+	 */
+	private static void doDelete(Connection conn) throws SQLException {
 		Statement statement = conn.createStatement();
 		statement.execute("DELETE FROM benchmark");
 		statement.close();
