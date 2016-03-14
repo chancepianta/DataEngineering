@@ -10,3 +10,7 @@ CREATE TABLE benchmark (
 	columnB INT,
 	filler CHAR(247)
 );
+
+CREATE INDEX col_a_index ON benchmark ( columnA );
+
+--CREATE INDEX col_b_index ON benchmark ( columnB );
