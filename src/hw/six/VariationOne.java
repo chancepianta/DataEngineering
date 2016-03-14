@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.Random;
 
 public class VariationOne {
@@ -17,18 +16,22 @@ public class VariationOne {
 		String user = "root";
 		String password = "";
 		
-		int total = 10000;
+		int total = 5000000;
 		
 		Connection conn = null;
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection(url, user, password);
 			
-			System.out.println("Begin: " + System.currentTimeMillis());
+			long begin = System.currentTimeMillis();
+			System.out.println("Begin: " + begin);
 			doInsert(conn, total);
-			System.out.println("End: " + System.currentTimeMillis());
+			long end = System.currentTimeMillis();
+			System.out.println("End: " + end);
 
-			doDelete(conn);
+			Util.doDelete(conn);
+			
+			System.out.println("Total Time = " + Util.getMinutes(begin, end) + " minutes");
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		} finally {
@@ -60,15 +63,5 @@ public class VariationOne {
 		}
 		statement.executeBatch();
 		statement.closeOnCompletion();
-	}
-	/**
-	 * Deletes all rows from benchmark table.
-	 * @param conn
-	 * @throws SQLException
-	 */
-	private static void doDelete(Connection conn) throws SQLException {
-		Statement statement = conn.createStatement();
-		statement.execute("DELETE FROM benchmark");
-		statement.close();
 	}
 }
