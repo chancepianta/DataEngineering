@@ -13,4 +13,4 @@ CREATE TABLE benchmark (
 
 CREATE INDEX col_a_index ON benchmark ( columnA );
 
---CREATE INDEX col_b_index ON benchmark ( columnB );
+CREATE INDEX col_b_index ON benchmark ( columnB );
