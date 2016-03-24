@@ -1,0 +1,68 @@
+# Script to create database and table for HW8 of Data Engineering
+
+CREATE DATABASE IF NOT EXISTS data_engineering;
+
+USE data_engineering;
+
+/*CREATE TABLE TestData (
+	pk INT PRIMARY KEY,
+	ht INT(5),
+	tt INT(4),
+	ot INT(3),
+	filler CHAR(247)
+);*/
+
+/*
+ Create non indexed copies of TestData table
+ To be run after TestData table has been loaded
+*/
+#CREATE TABLE A LIKE TestData;
+#INSERT INTO A SELECT * FROM TestData;
+
+#CREATE TABLE B LIKE TestData;
+#INSERT INTO B SELECT * FROM TestData;
+
+#CREATE TABLE C LIKE TestData;
+#INSERT INTO C SELECT * FROM TestData;
+
+/*
+ Create indexed copies of TestData table
+ To be run after TestData table has been loaded
+*/
+#CREATE TABLE Aprime LIKE TestData;
+#INSERT INTO Aprime SELECT * FROM TestData;
+#CREATE INDEX col_ht_index_aprime ON Aprime (ht);
+#CREATE INDEX col_tt_index_aprime ON Aprime (tt);
+#CREATE INDEX col_ot_index_aprime ON Aprime (ot);
+
+#CREATE TABLE Bprime LIKE TestData;
+#INSERT INTO Bprime SELECT * FROM TestData;
+#CREATE INDEX col_ht_index_bprime ON Bprime (ht);
+#CREATE INDEX col_tt_index_bprime ON Bprime (tt);
+#CREATE INDEX col_ot_index_bprime ON Bprime (ot);
+
+#CREATE TABLE Cprime LIKE TestData;
+#INSERT INTO Cprime SELECT * FROM TestData;
+#CREATE INDEX col_ht_index_cprime ON Cprime (ht);
+#CREATE INDEX col_tt_index_cprime ON Cprime (tt);
+#CREATE INDEX col_ot_index_cprime ON Cprime (ot);
+
+/*
+ Create copies of TestData table that have foreign key referecnes to table A
+ For Bdprime also create indexes on attributes ht, tt, and ot
+ To be run after TestData table has been loaded
+*/
+CREATE TABLE Bdprime LIKE TestData;
+INSERT INTO Bdprime SELECT * FROM TestData;
+ALTER TABLE Bdprime ADD FOREIGN KEY (ht) REFERENCES A (pk);
+ALTER TABLE Bdprime ADD FOREIGN KEY (tt) REFERENCES A (pk);
+ALTER TABLE Bdprime ADD FOREIGN KEY (ot) REFERENCES A (pk);
+CREATE INDEX col_ht_index_bdprime ON Bdprime (ht);
+CREATE INDEX col_tt_index_bdprime ON Bdprime (tt);
+CREATE INDEX col_ot_index_bdprime ON Bdprime (ot);
+
+CREATE TABLE Cdprime LIKE TestData;
+INSERT INTO Cdprime SELECT * FROM TestData;
+ALTER TABLE Cdprime ADD FOREIGN KEY (ht) REFERENCES A (pk);
+#ALTER TABLE Cdprime ADD FOREIGN KEY (tt) REFERENCES A (pk);
+#ALTER TABLE Cdprime ADD FOREIGN KEY (ot) REFERENCES A (pk);
